@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Product — Fieldstone &amp; Fern</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="announce">Free shipping on orders over $75 &nbsp;•&nbsp; Handmade pieces restock every Thursday</div>
+  <div class="nav-row container">
+    <a href="index.html" class="logo">Fieldstone <span class="mark">&amp; Fern</span></a>
+    <nav>
+      <ul class="main-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html" class="active">Shop</a></li>
+        <li><a href="shop.html?cat=Cookware">Cookware</a></li>
+        <li><a href="about.html">Our Story</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-tools">
+      <button class="icon-btn" aria-label="Search">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <a class="icon-btn" href="cart.html" aria-label="Cart">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>
+        <span class="cart-count" data-cart-count>0</span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="container page-header">
+  <div class="breadcrumb"><a href="index.html">Home</a> / <a href="shop.html">Shop</a> / <span id="crumbCat"></span></div>
+</div>
+
+<div class="container" id="productRoot" style="padding-bottom: 60px;"></div>
+
+<div class="container">
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="desc">Description</button>
+    <button class="tab-btn" data-tab="specs">Specifications</button>
+    <button class="tab-btn" data-tab="reviews">Reviews</button>
+  </div>
+  <div class="tab-panel active" id="tab-desc"></div>
+  <div class="tab-panel" id="tab-specs"></div>
+  <div class="tab-panel" id="tab-reviews"></div>
+</div>
+
+<section class="tint">
+  <div class="container">
+    <div class="section-head"><div><h2>You might also like</h2><p>More from the same category.</p></div></div>
+    <div class="product-grid" id="relatedGrid"></div>
+  </div>
+</section>
+
+<footer class="site-footer" id="siteFooter"></footer>
+
+<script src="js/icons.js"></script>
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/layout.js"></script>
+<script>
+  renderFooter(document.getElementById("siteFooter"));
+
+  const id = new URLSearchParams(location.search).get("id") || PRODUCTS[0].id;
+  const p = findProduct(id) || PRODUCTS[0];
+  document.getElementById("pageTitle").textContent = `${p.name} — Fieldstone & Fern`;
+  document.getElementById("crumbCat").innerHTML = `<a href="shop.html?cat=${encodeURIComponent(p.category)}">${p.category}</a> / ${p.name}`;
+
+  let selectedColor = p.colors[0];
+  let qty = 1;
+
+  function renderDetail() {
+    document.getElementById("productRoot").innerHTML = `
+    <div class="product-detail">
+      <div>
+        <div class="pd-gallery-main">${icon(p.icon, selectedColor)}</div>
+        <div class="pd-thumbs">
+          ${p.colors.map((c,i) => `<div class="pd-thumb ${c === selectedColor ? "active" : ""}" onclick="selectColor('${c}')">${icon(p.icon, c)}</div>`).join("")}
+        </div>
+      </div>
+      <div>
+        <span class="pd-cat">${p.category}</span>
+        <h1>${p.name}</h1>
+        <span class="stars">${starRow(p.rating)} <span style="color:var(--ink-soft)">${p.rating} · ${p.reviews} reviews</span></span>
+        <div class="pd-price">${p.oldPrice ? `<del style="font-size:1.1rem;color:var(--ink-soft);margin-right:10px;">${money(p.oldPrice)}</del>` : ""}${money(p.price)}</div>
+        <p class="pd-desc">${p.short}</p>
+
+        ${p.colors.length > 1 ? `
+        <div>
+          <label style="font-size:0.85rem;font-weight:600;">Finish</label>
+          <div class="swatch-row">
+            ${p.colors.map(c => `<div class="swatch ${c === selectedColor ? "active" : ""}" style="background:${c}" onclick="selectColor('${c}')"></div>`).join("")}
+          </div>
+        </div>` : ""}
+
+        <div class="pd-row">
+          <div class="qty-control">
+            <button onclick="changeQty(-1)">−</button>
+            <input type="text" id="qtyInput" value="${qty}" readonly>
+            <button onclick="changeQty(1)">+</button>
+          </div>
+          <button class="btn btn-primary" style="flex:1;" onclick="addToCart('${p.id}', qty, selectedColor); ">Add to cart — ${money(p.price)}</button>
+        </div>
+        <div class="badge-row">
+          <span class="badge-pill">Ships in 2 business days</span>
+          <span class="badge-pill">30-day returns</span>
+        </div>
+        <ul class="pd-meta-list">
+          ${Object.entries(p.specs).map(([k,v]) => `<li><span>${k}</span><span>${v}</span></li>`).join("")}
+        </ul>
+      </div>
+    </div>`;
+  }
+
+  function selectColor(c) { selectedColor = c; renderDetail(); }
+  function changeQty(d) {
+    qty = Math.max(1, qty + d);
+    document.getElementById("qtyInput").value = qty;
+  }
+
+  renderDetail();
+
+  document.getElementById("tab-desc").innerHTML = `<p>${p.details}</p>`;
+  document.getElementById("tab-specs").innerHTML = `<ul class="pd-meta-list">${Object.entries(p.specs).map(([k,v]) => `<li><span>${k}</span><span>${v}</span></li>`).join("")}</ul>`;
+  document.getElementById("tab-reviews").innerHTML = `
+    <div class="review"><div class="stars">★★★★★</div><strong>Genuinely better than what I had</strong><p>Been using this weekly for two months and it still looks new. Worth the price.</p></div>
+    <div class="review"><div class="stars">★★★★★</div><strong>Would buy again</strong><p>Arrived well packed and works exactly as described. My only regret is not ordering two.</p></div>
+    <div class="review"><div class="stars">★★★★☆</div><strong>Great quality, runs a little heavy</strong><p>Solid construction — just know it has some real weight to it before you order.</p></div>
+  `;
+
+  document.querySelectorAll(".tab-btn").forEach(btn => btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".tab-panel").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+  }));
+
+  renderProductGrid(document.getElementById("relatedGrid"), PRODUCTS.filter(x => x.category === p.category && x.id !== p.id).slice(0,4));
+</script>
+</body>
+</html>

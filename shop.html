@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop All — Fieldstone &amp; Fern</title>
+<meta name="description" content="Browse cookware, tableware, linens, storage and décor for a kitchen you actually use.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="announce">Free shipping on orders over $75 &nbsp;•&nbsp; Handmade pieces restock every Thursday</div>
+  <div class="nav-row container">
+    <a href="index.html" class="logo">Fieldstone <span class="mark">&amp; Fern</span></a>
+    <nav>
+      <ul class="main-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html" class="active">Shop</a></li>
+        <li><a href="shop.html?cat=Cookware">Cookware</a></li>
+        <li><a href="about.html">Our Story</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-tools">
+      <button class="icon-btn" aria-label="Search">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <a class="icon-btn" href="cart.html" aria-label="Cart">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>
+        <span class="cart-count" data-cart-count>0</span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="container page-header">
+  <div class="breadcrumb"><a href="index.html">Home</a> / <span>Shop</span></div>
+  <h1>Shop all</h1>
+  <p>Every product we carry, sourced from workshops we've visited ourselves.</p>
+</div>
+
+<div class="container" style="padding-bottom: 100px;">
+  <div class="shop-layout">
+    <aside class="filter-sidebar">
+      <div class="filter-block">
+        <h4>Category</h4>
+        <div id="categoryFilters"></div>
+      </div>
+      <div class="filter-block">
+        <h4>Price</h4>
+        <input type="range" id="priceRange" min="0" max="150" step="5" value="150" style="width:100%; accent-color: var(--juniper);">
+        <div class="range-row"><span>$0</span><span id="priceRangeLabel">Up to $150</span></div>
+      </div>
+      <div class="filter-block">
+        <h4>Rating</h4>
+        <label class="filter-option"><input type="radio" name="rating" value="0" checked> Any rating</label>
+        <label class="filter-option"><input type="radio" name="rating" value="4.5"> 4.5 &amp; up</label>
+        <label class="filter-option"><input type="radio" name="rating" value="4.8"> 4.8 &amp; up</label>
+      </div>
+      <button class="btn btn-outline btn-full" onclick="clearFilters()">Clear filters</button>
+    </aside>
+
+    <div>
+      <div class="shop-toolbar">
+        <span id="resultCount"></span>
+        <select id="sortSelect" aria-label="Sort products">
+          <option value="featured">Sort: Featured</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="rating">Highest Rated</option>
+          <option value="name">Name: A–Z</option>
+        </select>
+      </div>
+      <div class="product-grid" id="shopGrid"></div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer" id="siteFooter"></footer>
+
+<script src="js/icons.js"></script>
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/layout.js"></script>
+<script>
+  renderFooter(document.getElementById("siteFooter"));
+
+  const state = { cat: new URLSearchParams(location.search).get("cat") || "all", maxPrice: 150, minRating: 0, sort: "featured" };
+
+  function renderCategoryFilters() {
+    const el = document.getElementById("categoryFilters");
+    const all = ["all", ...CATEGORIES.map(c => c.name)];
+    el.innerHTML = all.map(name => `
+      <label class="filter-option">
+        <input type="radio" name="cat" value="${name}" ${state.cat === name ? "checked" : ""}>
+        ${name === "all" ? "All categories" : name}
+      </label>
+    `).join("");
+    el.querySelectorAll("input").forEach(inp => inp.addEventListener("change", e => { state.cat = e.target.value; applyFilters(); }));
+  }
+
+  function applyFilters() {
+    let list = PRODUCTS.filter(p => (state.cat === "all" || p.category === state.cat) && p.price <= state.maxPrice && p.rating >= state.minRating);
+    switch (state.sort) {
+      case "price-asc": list.sort((a,b) => a.price - b.price); break;
+      case "price-desc": list.sort((a,b) => b.price - a.price); break;
+      case "rating": list.sort((a,b) => b.rating - a.rating); break;
+      case "name": list.sort((a,b) => a.name.localeCompare(b.name)); break;
+      default: break;
+    }
+    document.getElementById("resultCount").textContent = `${list.length} product${list.length === 1 ? "" : "s"}`;
+    renderProductGrid(document.getElementById("shopGrid"), list);
+  }
+
+  function clearFilters() {
+    state.cat = "all"; state.maxPrice = 150; state.minRating = 0; state.sort = "featured";
+    document.getElementById("priceRange").value = 150;
+    document.getElementById("priceRangeLabel").textContent = "Up to $150";
+    document.getElementById("sortSelect").value = "featured";
+    document.querySelectorAll('input[name="rating"]').forEach(r => r.checked = r.value === "0");
+    renderCategoryFilters();
+    applyFilters();
+  }
+
+  document.getElementById("priceRange").addEventListener("input", e => {
+    state.maxPrice = Number(e.target.value);
+    document.getElementById("priceRangeLabel").textContent = state.maxPrice >= 150 ? "Up to $150" : `Up to $${state.maxPrice}`;
+    applyFilters();
+  });
+  document.querySelectorAll('input[name="rating"]').forEach(r => r.addEventListener("change", e => { state.minRating = Number(e.target.value); applyFilters(); }));
+  document.getElementById("sortSelect").addEventListener("change", e => { state.sort = e.target.value; applyFilters(); });
+
+  renderCategoryFilters();
+  applyFilters();
+</script>
+</body>
+</html>
