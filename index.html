@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fieldstone &amp; Fern — Home &amp; Kitchen, Made to Last</title>
+<meta name="description" content="Considered cookware, tableware, and textiles for kitchens people actually cook in.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="announce">Free shipping on orders over $75 &nbsp;•&nbsp; Handmade pieces restock every Thursday</div>
+  <div class="nav-row container">
+    <a href="index.html" class="logo">Fieldstone <span class="mark">&amp; Fern</span></a>
+    <nav>
+      <ul class="main-nav">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="shop.html?cat=Cookware">Cookware</a></li>
+        <li><a href="about.html">Our Story</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-tools">
+      <button class="icon-btn" aria-label="Search">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <a class="icon-btn" href="cart.html" aria-label="Cart">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>
+        <span class="cart-count" data-cart-count>0</span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="hero" style="padding-bottom:70px;">
+  <div>
+    <div class="hero-eyebrow">Home &amp; kitchen, considered</div>
+    <h1>Tools for a kitchen<br>that gets used daily.</h1>
+    <p class="lede">Cast iron that gets handed down, linens that soften with every wash, and stoneware thrown in small batches — chosen for the cooking you actually do, not the kitchen in a catalogue.</p>
+    <div class="hero-actions">
+      <a href="shop.html" class="btn btn-primary">Shop the collection</a>
+      <a href="about.html" class="btn btn-outline">Our story</a>
+    </div>
+    <div class="hero-stats">
+      <div><strong>12k+</strong><span>Kitchens outfitted</span></div>
+      <div><strong>4.8/5</strong><span>Average rating</span></div>
+      <div><strong>30-day</strong><span>Easy returns</span></div>
+    </div>
+  </div>
+  <div class="hero-art">
+    <div id="heroIcon"></div>
+    <div class="hero-badge">
+      <span id="heroBadgeIcon"></span>
+      <span><strong>Walnut Cutting Board</strong><br>Selling fast this week</span>
+    </div>
+  </div>
+</section>
+
+<section class="tint">
+  <div class="container">
+    <div class="section-head">
+      <div><h2>Shop by category</h2><p>Six departments, all built around one idea: things worth keeping.</p></div>
+      <a href="shop.html" class="btn-ghost">View all products →</a>
+    </div>
+    <div class="cat-grid" id="categoryGrid"></div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div><h2>Most brought home</h2><p>The pieces that keep leaving five-star reviews.</p></div>
+      <a href="shop.html" class="btn-ghost">Shop bestsellers →</a>
+    </div>
+    <div class="product-grid" id="bestsellerGrid"></div>
+  </div>
+</section>
+
+<section class="tint">
+  <div class="container">
+    <div class="value-strip">
+      <div class="value-item">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M3 12l7 7 11-13" stroke="#344A3B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h4>Built to be used</h4>
+        <p>Every piece is tested in a working kitchen before it's tested by you.</p>
+      </div>
+      <div class="value-item">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.5 6.5H21l-5.5 4 2 6.5L12 15l-5.5 4 2-6.5L3 8.5h6.5z" stroke="#344A3B" stroke-width="2" stroke-linejoin="round"/></svg>
+        <h4>Small-batch makers</h4>
+        <p>We work directly with under-30-person studios, not overseas catalogues.</p>
+      </div>
+      <div class="value-item">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1 0 16 0 8 8 0 0 0-16 0z" stroke="#344A3B" stroke-width="2"/><path d="M12 8v4l3 2" stroke="#344A3B" stroke-width="2" stroke-linecap="round"/></svg>
+        <h4>Ships within 2 days</h4>
+        <p>In-stock orders leave our Ohio warehouse in two business days or less.</p>
+      </div>
+      <div class="value-item">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M21 12a9 9 0 1 1-3-6.7" stroke="#344A3B" stroke-width="2" stroke-linecap="round"/><path d="M21 4v5h-5" stroke="#344A3B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h4>30-day returns</h4>
+        <p>Didn't earn a place on your shelf? Send it back for a full refund.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head"><div><h2>How we choose what we sell</h2><p>Three questions every product has to answer before it makes the catalogue.</p></div></div>
+    <div class="process-grid">
+      <div class="process-item"><span class="num">01</span><h3>Will it last a decade?</h3><p>We look for materials and joinery that improve with age instead of wearing out — cast iron over coated aluminum, solid wood over veneer.</p></div>
+      <div class="process-item"><span class="num">02</span><h3>Who's actually making it?</h3><p>We visit the workshop, meet the maker, and ask about the material sourcing before anything goes up for sale.</p></div>
+      <div class="process-item"><span class="num">03</span><h3>Would we replace it with itself?</h3><p>If our own team wouldn't buy the same thing again, it doesn't stay in the shop.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="tint">
+  <div class="container">
+    <div class="quote-block">
+      <p>"I've replaced almost every pan in my kitchen with something from here. The skillet is the first thing I reach for, and it's the first thing I'd grab in a fire."</p>
+      <cite>— Priya N., verified buyer</cite>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div><h2>New this season</h2><p>Fresh from the kiln, the loom, and the workshop.</p></div>
+      <a href="shop.html" class="btn-ghost">Shop new arrivals →</a>
+    </div>
+    <div class="product-grid" id="newGrid"></div>
+  </div>
+</section>
+
+<footer class="site-footer" id="siteFooter"></footer>
+
+<script src="js/icons.js"></script>
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/layout.js"></script>
+<script>
+  document.getElementById("heroIcon").innerHTML = icon("board", "#344A3B");
+  document.getElementById("heroBadgeIcon").innerHTML = icon("board", "#A85736").replace("viewBox=\"0 0 100 100\"", "viewBox=\"0 0 100 100\" width=\"26\" height=\"26\"");
+  renderCategoryGrid(document.getElementById("categoryGrid"));
+  renderProductGrid(document.getElementById("bestsellerGrid"), PRODUCTS.filter(p => p.badge === "Bestseller"));
+  renderProductGrid(document.getElementById("newGrid"), PRODUCTS.filter(p => p.badge === "New" || p.badge === "Sale").concat(PRODUCTS.slice(0,4)).slice(0,4));
+  renderFooter(document.getElementById("siteFooter"));
+</script>
+</body>
+</html>
